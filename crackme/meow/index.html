@@ -10,10 +10,10 @@
 <meta property="og:locale" content="en">
 <meta property="og:site_name" content="Ali Al Balushi Blog">
 <meta property="og:title" content="sushitake (Find the Flag) – Target">
-<meta property="og:url" content="https://alialbalushiii.github.io/crackme/find-the-flag/">
+<meta property="og:url" content="https://alialbalushiii.github.io/crackme/meow/">
   <meta property="og:description" content="Find the Flag is a beginner crackme solved via static reverse engineering.">
-  <meta property="article:published_time" content="2026-01-28T17:00:00+02:00">
-<link rel="canonical" href="https://alialbalushiii.github.io/crackme/find-the-flag/">
+  <meta property="article:published_time" content="2026-02-4T17:00:00+02:00">
+<link rel="canonical" href="https://alialbalushiii.github.io/crackme/meow/">
 <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -100,21 +100,21 @@
   <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="sushitake (Find the Flag) – Target">
     <meta itemprop="description" content="Find the Flag is a crackme reverse-engineering challenge solved via static analysis, rebuilding a hidden flag from overlapping writes.">
-    <meta itemprop="datePublished" content="2026-1-28T17:00:00+02:00">
+    <meta itemprop="datePublished" content="2026-2-4T17:00:00+02:00">
     <div class="page__inner-wrap"> 
         <header>
           <h1 id="page-title" class="page__title p-name" itemprop="headline">
-            <a href="https://alialbalushiii.github.io/crackme/find-the-flag/" class="u-url" itemprop="url">sushitake (Find the Flag) – Target</a>
+            <a href="https://alialbalushiii.github.io/crackme/meow/" class="u-url" itemprop="url">sushitake (Find the Flag) – Target</a>
           </h1>
   <p class="page__meta"> 
       <span class="page__meta-date">
         <i class="far fa-calendar-alt" aria-hidden="true"></i>
-        <time datetime="2026-01-28T17:00:00+02:00">Jan 28, 2026</time>
+        <time datetime="2026-01-28T17:00:00+02:00">Feb 4, 2026</time>
       </span>
     <span class="page__meta-sep"></span>
       <span class="page__meta-readtime">
         <i class="far fa-clock" aria-hidden="true"></i>
-          4 minute read
+          7 minute read
       </span>
   </p>
         </header>
@@ -177,10 +177,10 @@
 
         <p><strong>Running the target</strong></p>
         <p>After running the target, it asks the user to input the flag:</p>
-        <p><img src="/images/crackme/image1.png" alt="Program asks for flag"></p>
+        <p><img src="/images/crackme/meow/1.png" alt="Program asks for flag"></p>
 
         <p>It shows an <strong>unlucky</strong> message and exits if the flag is incorrect:</p>
-        <p><img src="/images/crackme/image2.png" alt="Unlucky message"></p>
+        <p><img src="/images/crackme/meow/2.png" alt="Unlucky message"></p>
 
         <hr>
 
@@ -191,10 +191,10 @@
         </p>
 
         <p>Here is the <code class="language-plaintext highlighter-rouge">if</code> condition and we can see the <code class="language-plaintext highlighter-rouge">unlucky</code> message:</p>
-        <p><img src="/images/crackme/image3.png" alt="If condition shows unlucky"></p>
+        <p><img src="/images/crackme/meow/3.png" alt="If condition shows unlucky"></p>
 
         <p>We can refactor that block into a clearer form like this:</p>
-        <p><img src="/images/crackme/image4.png" alt="Refactored if condition"></p>
+        <p><img src="/images/crackme/meow/4.png" alt="Refactored if condition"></p>
 
         <p>Now we want <code class="language-plaintext highlighter-rouge">yay</code> printed instead of <code class="language-plaintext highlighter-rouge">unlucky</code>.</p>
 
@@ -202,7 +202,7 @@
 
         <p><strong>Identify user input</strong></p>
         <p>In the snippet below, the user input is stored in <code class="language-plaintext highlighter-rouge">Block</code>, then later copied into <code class="language-plaintext highlighter-rouge">v10</code>:</p>
-        <p><img src="/images/crackme/image5.png" alt="User input stored in Block then v10"></p>
+        <p><img src="/images/crackme/meow/5.png" alt="User input stored in Block then v10"></p>
         <p><strong>Notice:</strong> <code class="language-plaintext highlighter-rouge">v10</code> is used in the <code class="language-plaintext highlighter-rouge">if</code> condition, so we’re on the right track.</p>
 
         <hr>
@@ -213,7 +213,7 @@
           and <code class="language-plaintext highlighter-rouge">v15</code> is a pointer to <code class="language-plaintext highlighter-rouge">v9</code>.
           That explains why <code class="language-plaintext highlighter-rouge">v15</code> appears in the <code class="language-plaintext highlighter-rouge">if</code> condition.
         </p>
-        <p><img src="/images/crackme/image6.png" alt="v9 flag buffer and v15 pointer"></p>
+        <p><img src="/images/crackme/meow/6.png" alt="v9 flag buffer and v15 pointer"></p>
         <p>
           We can also notice <strong>overlapping writes</strong> used to confuse/obfuscate the final string.
         </p>
@@ -224,22 +224,22 @@
 
         <p><strong>1) First write</strong></p>
         <p>It assigns <code class="language-plaintext highlighter-rouge">v9</code> to the string <code class="language-plaintext highlighter-rouge">"meow"</code>:</p>
-        <p><img src="/images/crackme/image7.png" alt="Assign v9 = meow"></p>
+        <p><img src="/images/crackme/meow/7.png" alt="Assign v9 = meow"></p>
         <p>So the <code class="language-plaintext highlighter-rouge">v9</code> value will look like:</p>
-        <p><img src="/images/crackme/image8.png" alt="v9 after first write"></p>
+        <p><img src="/images/crackme/meow/8.png" alt="v9 after first write"></p>
 
         <p><strong>2) Second overlapping write</strong></p>
-        <p><img src="/images/crackme/image9.png" alt="Second overlapping write snippet"></p>
+        <p><img src="/images/crackme/meow/9.png" alt="Second overlapping write snippet"></p>
         <p>
           This means we add the string <code class="language-plaintext highlighter-rouge">"meow"</code> again, but starting from <strong>index 3</strong>.
           If a position is already occupied, it gets overwritten.
         </p>
-        <p><img src="/images/crackme/image10.png" alt="Explaining start index 3 overwrite"></p>
+        <p><img src="/images/crackme/meow/10.png" alt="Explaining start index 3 overwrite"></p>
         <p>In this case, <code class="language-plaintext highlighter-rouge">v9</code> becomes:</p>
-        <p><img src="/images/crackme/image11.png" alt="v9 after second write"></p>
+        <p><img src="/images/crackme/meow/11.png" alt="v9 after second write"></p>
 
         <p><strong>3) Third overlapping write (endianness trick)</strong></p>
-        <p><img src="/images/crackme/image12.png" alt="Third overlapping write snippet"></p>
+        <p><img src="/images/crackme/meow/12.png" alt="Third overlapping write snippet"></p>
 
         <p>
           It starts from <strong>index 2</strong>. The tricky part: we can’t insert the hex directly as-is because x86 is
@@ -247,35 +247,35 @@
         </p>
 
         <p>Instead of inserting bytes like this:</p>
-        <p><img src="/images/crackme/image13.png" alt="Incorrect byte order"></p>
+        <p><img src="/images/crackme/meow/13.png" alt="Incorrect byte order"></p>
 
         <p>We reverse them like this:</p>
-        <p><img src="/images/crackme/image14.png" alt="Correct little-endian byte order"></p>
+        <p><img src="/images/crackme/meow/14.png" alt="Correct little-endian byte order"></p>
 
         <p>To simplify, convert the hex to ASCII:</p>
-        <p><img src="/images/crackme/image15.png" alt="Hex to ASCII"></p>
+        <p><img src="/images/crackme/meow/15.png" alt="Hex to ASCII"></p>
 
         <p>Now add the ASCII into <code class="language-plaintext highlighter-rouge">v9 + 2</code>:</p>
-        <p><img src="/images/crackme/image16.png" alt="Write ASCII into v9+2"></p>
+        <p><img src="/images/crackme/meow/16.png" alt="Write ASCII into v9+2"></p>
 
         <p>So <code class="language-plaintext highlighter-rouge">v9</code> will be:</p>
-        <p><img src="/images/crackme/image17.png" alt="v9 after third write"></p>
+        <p><img src="/images/crackme/meow/17.png" alt="v9 after third write"></p>
 
         <p><strong>4) Final overlapping write</strong></p>
-        <p><img src="/images/crackme/image18.png" alt="Write s at index 10 snippet"></p>
+        <p><img src="/images/crackme/meow/18.png" alt="Write s at index 10 snippet"></p>
         <p>This means we add <code class="language-plaintext highlighter-rouge">"s"</code> at <strong>index 10</strong>:</p>
-        <p><img src="/images/crackme/image19.png" alt="s added at index 10"></p>
+        <p><img src="/images/crackme/meow/19.png" alt="s added at index 10"></p>
 
         <hr>
 
         <p>This line adds the null terminator <code class="language-plaintext highlighter-rouge">\0</code> so the program knows the string end:</p>
-        <p><img src="/images/crackme/image20.png" alt="Null terminator write"></p>
+        <p><img src="/images/crackme/meow/20.png" alt="Null terminator write"></p>
 
         <hr>
 
         <p><strong>Final flag:</strong> <code class="language-plaintext highlighter-rouge">meilovecats</code></p>
         <p>Let’s try it:</p>
-        <p><img src="/images/crackme/image21.png" alt="Yay success"></p>
+        <p><img src="/images/crackme/meow/21.png" alt="Yay success"></p>
 
         <ul>
           <li>We get <code class="language-plaintext highlighter-rouge">yay</code>, which means we recovered the correct flag ✅</li>
