@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+<!-- begin _includes/seo.html --><title>sushitake (Find the Flag) – Target - Ali Al Balushi’s Blog</title>
+<meta name="description" content="Find the Flag is a beginner crackme solved via static reverse engineering.">
+  <meta name="author" content="Ali Al Balushi">
+  <meta property="article:author" content="Ali Al Balushi">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="Ali Al Balushi Blog">
+<meta property="og:title" content="sushitake (Find the Flag) – Target">
+<meta property="og:url" content="https://alialbalushiii.github.io/crackme/find-the-flag/">
+  <meta property="og:description" content="Find the Flag is a beginner crackme solved via static reverse engineering.">
+  <meta property="article:published_time" content="2026-01-28T17:00:00+02:00">
+<link rel="canonical" href="https://alialbalushiii.github.io/crackme/find-the-flag/">
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "alialbalushiii",
+      "url": "https://alialbalushiii.github.io/"
+    
+  }
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+  </head>
+  <body class="layout--single wide">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Ali Al Balushi's Blog
+          
+        </a>
+        <ul class="visible-links">
+<li class="masthead__menu-item">
+              <a href="/about">About</a>
+            </li>
+</ul>  
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+    <div class="initial-content">
+<div id="main" role="main">
+  <div class="sidebar sticky">
+<div itemscope itemtype="https://schema.org/Person">
+    <div class="author__avatar">
+        <img src="/images/avatar.jpg" alt="Ali Al Balushi" itemprop="image">   
+    </div>
+  <div class="author__content">   
+      <h3 class="author__name" itemprop="name">Ali Al Balushi</h3>  
+      <div class="author__bio" itemprop="description">      
+      </div>    
+  </div>
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">  
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Newcastle</span>
+        </li>
+            <li><a href="/" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-home" aria-hidden="true"></i><span class="label">Home Page</span></a></li>
+            <li><a href="https://github.com/alialbalushiii" rel="noopener noreferrer" target="_blank"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">Github</span></a></li>
+            <li><a href="https://www.linkedin.com/in/ali-al-balushi-125ab3333/" rel="noopener noreferrer" target="_blank"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Linkedin</span></a></li>
+            <li class="author__badge">
+  <a href="https://tryhackme.com" target="_blank" rel="noopener noreferrer">
+    <img 
+      src="https://tryhackme-badges.s3.amazonaws.com/oma.png"
+      alt="TryHackMe Badge"
+      style="max-width:180px; height:auto;"
+    />
+  </a>
+</li>
+    </ul>
+  </div>
+</div>
+  </div>
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="sushitake (Find the Flag) – Target">
+    <meta itemprop="description" content="Find the Flag is a crackme reverse-engineering challenge solved via static analysis, rebuilding a hidden flag from overlapping writes.">
+    <meta itemprop="datePublished" content="2026-1-28T17:00:00+02:00">
+    <div class="page__inner-wrap"> 
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="https://alialbalushiii.github.io/crackme/find-the-flag/" class="u-url" itemprop="url">sushitake (Find the Flag) – Target</a>
+          </h1>
+  <p class="page__meta"> 
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        <time datetime="2026-01-28T17:00:00+02:00">Jan 28, 2026</time>
+      </span>
+    <span class="page__meta-sep"></span>
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+          4 minute read
+      </span>
+  </p>
+        </header>
+
+      <!-- ✅ ONLY CONTENT BELOW WAS REPLACED (styles/layout unchanged) -->
+      <section class="page__content e-content" itemprop="text">
+        <div>
+          <style>
+              #carbonads {
+                border: 1px solid black;
+                border-radius: 7px;
+                border-spacing: 7px;
+                display: block;
+                overflow: hidden;
+                padding: 1em;
+                line-height: 1.5;
+              }
+              #carbonads span {
+                position: relative;
+                display: block;
+                overflow: hidden;
+              }
+              .carbon-img img {
+                display: block;
+                float: left;
+              }
+              .carbon-text {
+                display: block;
+                font-size: .9em;
+                text-align: end;
+              }
+              .carbon-poweredby {
+                display: block;
+                font-size: .8em;
+                float: right;
+                line-height: 1;
+                letter-spacing: 1px;
+                }
+                </style>
+                <br>   
+          <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CK7DL23U&amp;placement=0xrickgithubio" id="_carbonads_js"></script> 
+                <br>
+        </div>
+
+        <h2 id="sushitake-find-the-flag-target">sushitake (Find the Flag) - Target</h2>
+
+        <ul>
+          <li><strong>Name:</strong> Find the Flag</li>
+          <li><strong>Author:</strong> sushitake</li>
+          <li><strong>Platform:</strong> Windows</li>
+          <li><strong>Architecture:</strong> x86-64</li>
+          <li><strong>Language:</strong> C / C++</li>
+          <li><strong>Difficulty:</strong> 2.0 (Beginner) 🟡</li>
+          <li><strong>Quality:</strong> 4.9 ⭐</li>
+          <li><strong>Upload Date:</strong> 2024-02-08</li>
+          <li><strong>Description:</strong> A crackme reverse-engineering challenge. It can be solved dynamically, but in this writeup we will go through static reverse engineering. The target asks the user to enter a value that the program checks internally. The goal is to find the input that passes this check.</li>
+        </ul>
+
+        <hr>
+
+        <p><strong>Running the target</strong></p>
+        <p>After running the target, it asks the user to input the flag:</p>
+        <p><img src="/images/crackme/image1.png" alt="Program asks for flag"></p>
+
+        <p>It shows an <strong>unlucky</strong> message and exits if the flag is incorrect:</p>
+        <p><img src="/images/crackme/image2.png" alt="Unlucky message"></p>
+
+        <hr>
+
+        <h2 id="now-reverse-engineering-time">Now reverse-engineering time</h2>
+        <p>
+          I opened the target in <strong>IDA Pro</strong> and decompiled the <code class="language-plaintext highlighter-rouge">main</code> function.
+          After decompiling, the first thing is to locate the <strong>success/fail decision</strong>.
+        </p>
+
+        <p>Here is the <code class="language-plaintext highlighter-rouge">if</code> condition and we can see the <code class="language-plaintext highlighter-rouge">unlucky</code> message:</p>
+        <p><img src="/images/crackme/image3.png" alt="If condition shows unlucky"></p>
+
+        <p>We can refactor that block into a clearer form like this:</p>
+        <p><img src="/images/crackme/image4.png" alt="Refactored if condition"></p>
+
+        <p>Now we want <code class="language-plaintext highlighter-rouge">yay</code> printed instead of <code class="language-plaintext highlighter-rouge">unlucky</code>.</p>
+
+        <hr>
+
+        <p><strong>Identify user input</strong></p>
+        <p>In the snippet below, the user input is stored in <code class="language-plaintext highlighter-rouge">Block</code>, then later copied into <code class="language-plaintext highlighter-rouge">v10</code>:</p>
+        <p><img src="/images/crackme/image5.png" alt="User input stored in Block then v10"></p>
+        <p><strong>Notice:</strong> <code class="language-plaintext highlighter-rouge">v10</code> is used in the <code class="language-plaintext highlighter-rouge">if</code> condition, so we’re on the right track.</p>
+
+        <hr>
+
+        <p><strong>Identify the flag buffer</strong></p>
+        <p>
+          After analysing the snippet below, we can see that <code class="language-plaintext highlighter-rouge">v9</code> is the flag buffer,
+          and <code class="language-plaintext highlighter-rouge">v15</code> is a pointer to <code class="language-plaintext highlighter-rouge">v9</code>.
+          That explains why <code class="language-plaintext highlighter-rouge">v15</code> appears in the <code class="language-plaintext highlighter-rouge">if</code> condition.
+        </p>
+        <p><img src="/images/crackme/image6.png" alt="v9 flag buffer and v15 pointer"></p>
+        <p>
+          We can also notice <strong>overlapping writes</strong> used to confuse/obfuscate the final string.
+        </p>
+
+        <hr>
+
+        <h2 id="rebuild-flag-overlapping-writes">Rebuild the flag by going through the overlapping writes</h2>
+
+        <p><strong>1) First write</strong></p>
+        <p>It assigns <code class="language-plaintext highlighter-rouge">v9</code> to the string <code class="language-plaintext highlighter-rouge">"meow"</code>:</p>
+        <p><img src="/images/crackme/image7.png" alt="Assign v9 = meow"></p>
+        <p>So the <code class="language-plaintext highlighter-rouge">v9</code> value will look like:</p>
+        <p><img src="/images/crackme/image8.png" alt="v9 after first write"></p>
+
+        <p><strong>2) Second overlapping write</strong></p>
+        <p><img src="/images/crackme/image9.png" alt="Second overlapping write snippet"></p>
+        <p>
+          This means we add the string <code class="language-plaintext highlighter-rouge">"meow"</code> again, but starting from <strong>index 3</strong>.
+          If a position is already occupied, it gets overwritten.
+        </p>
+        <p><img src="/images/crackme/image10.png" alt="Explaining start index 3 overwrite"></p>
+        <p>In this case, <code class="language-plaintext highlighter-rouge">v9</code> becomes:</p>
+        <p><img src="/images/crackme/image11.png" alt="v9 after second write"></p>
+
+        <p><strong>3) Third overlapping write (endianness trick)</strong></p>
+        <p><img src="/images/crackme/image12.png" alt="Third overlapping write snippet"></p>
+
+        <p>
+          It starts from <strong>index 2</strong>. The tricky part: we can’t insert the hex directly as-is because x86 is
+          <strong>little-endian</strong> (bytes are reversed in memory).
+        </p>
+
+        <p>Instead of inserting bytes like this:</p>
+        <p><img src="/images/crackme/image13.png" alt="Incorrect byte order"></p>
+
+        <p>We reverse them like this:</p>
+        <p><img src="/images/crackme/image14.png" alt="Correct little-endian byte order"></p>
+
+        <p>To simplify, convert the hex to ASCII:</p>
+        <p><img src="/images/crackme/image15.png" alt="Hex to ASCII"></p>
+
+        <p>Now add the ASCII into <code class="language-plaintext highlighter-rouge">v9 + 2</code>:</p>
+        <p><img src="/images/crackme/image16.png" alt="Write ASCII into v9+2"></p>
+
+        <p>So <code class="language-plaintext highlighter-rouge">v9</code> will be:</p>
+        <p><img src="/images/crackme/image17.png" alt="v9 after third write"></p>
+
+        <p><strong>4) Final overlapping write</strong></p>
+        <p><img src="/images/crackme/image18.png" alt="Write s at index 10 snippet"></p>
+        <p>This means we add <code class="language-plaintext highlighter-rouge">"s"</code> at <strong>index 10</strong>:</p>
+        <p><img src="/images/crackme/image19.png" alt="s added at index 10"></p>
+
+        <hr>
+
+        <p>This line adds the null terminator <code class="language-plaintext highlighter-rouge">\0</code> so the program knows the string end:</p>
+        <p><img src="/images/crackme/image20.png" alt="Null terminator write"></p>
+
+        <hr>
+
+        <p><strong>Final flag:</strong> <code class="language-plaintext highlighter-rouge">meilovecats</code></p>
+        <p>Let’s try it:</p>
+        <p><img src="/images/crackme/image21.png" alt="Yay success"></p>
+
+        <ul>
+          <li>We get <code class="language-plaintext highlighter-rouge">yay</code>, which means we recovered the correct flag ✅</li>
+          <li>Thanks for reading! This challenge is a fun example of how overlapping memory writes can hide a flag, solved fully via static analysis.</li>
+        </ul>
+
+      </section>
+      <!-- ✅ ONLY CONTENT ABOVE WAS REPLACED -->
+
+      <footer class="page__meta">
+        <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2026-01-28T17:00:00+02:00">January 28, 2026</time></p>
+      </footer>
+    </div>    
+  </article>
+</div>
+    </div>
+    <div id="footer" class="page__footer">
+      <footer>
+        <div class="page__footer-follow">
+          <ul class="social-icons"></ul>
+        </div>
+      </footer>
+    </div>
+  <script src="/assets/js/main.min.js"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-97164925-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-97164925-2', { 'anonymize_ip': false});
+</script>
+  </body>
+</html>
