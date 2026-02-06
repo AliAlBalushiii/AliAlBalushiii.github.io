@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>winapiadmin - Array Crackme Writeup</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #0f172a;
+      color: #e5e7eb;
+      line-height: 1.7;
+      padding: 40px;
+    }
+    h1, h2, h3 {
+      color: #38bdf8;
+    }
+    hr {
+      border: 1px solid #1e293b;
+      margin: 30px 0;
+    }
+    code {
+      background: #020617;
+      padding: 4px 6px;
+      border-radius: 4px;
+      color: #facc15;
+    }
+    pre {
+      background: #020617;
+      padding: 16px;
+      border-radius: 8px;
+      overflow-x: auto;
+    }
+    img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin: 16px 0;
+      box-shadow: 0 0 0 1px #1e293b;
+    }
+    ul {
+      margin-left: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>winapiadmin (Array) – Crackme Writeup</h1>
+
+<ul>
+  <li><strong>Name:</strong> Array</li>
+  <li><strong>Author:</strong> winapiadmin</li>
+  <li><strong>Platform:</strong> Windows</li>
+  <li><strong>Architecture:</strong> x86-64</li>
+  <li><strong>Language:</strong> C / C++</li>
+  <li><strong>Difficulty:</strong> 2.0 (Beginner) 🟡</li>
+  <li><strong>Quality:</strong> 4.0 ⭐</li>
+  <li><strong>Upload Date:</strong> 2023-11-13</li>
+</ul>
+
+<p><strong>Description:</strong> Some array crackmes with anti-debugging.</p>
+
+<hr />
+
+<h2>Initial Execution</h2>
+
+<p>First, I start by running the target:</p>
+
+<img src="/images/crackme/image1.png" alt="Program execution prompt" />
+
+<p>It asks for a username and password.</p>
+
+<hr />
+
+<h2>Static Analysis – IDA Pro</h2>
+
+<p>Next, we open the binary in IDA Pro and decompile the <code>main()</code> function:</p>
+
+<img src="/images/crackme/image2.png" alt="IDA main function" />
+
+<p>We can notice:</p>
+
+<ul>
+  <li>The <code>Buffer</code> variable holds the username:</li>
+</ul>
+
+<img src="/images/crackme/image3.png" alt="Username buffer" />
+
+<ul>
+  <li>The <code>String</code> variable holds the password entered by the user:</li>
+</ul>
+
+<img src="/images/crackme/image4.png" alt="Password string" />
+
+<hr />
+
+<h2>Password Handling Logic</h2>
+
+<p>The variable <code>v5</code> holds the user-entered password, but instead of converting the string normally, it reads the raw 64-bit value directly:</p>
+
+<img src="/images/crackme/image5.png" alt="64-bit password read" />
+
+<hr />
+
+<h2>Critical Validation Condition</h2>
+
+<p>This <code>if</code> block determines whether the password is valid. This is the core logic we must reverse engineer:</p>
+
+<img src="/images/crackme/image6.png" alt="Validation if block" />
+
+<p>The condition requires the password (as a 64-bit integer) to equal:</p>
+
+<pre><code>v8.m128i_i64[Buffer[0] % 2] % 64</code></pre>
+
+<hr />
+
+<h2>Understanding <code>v8</code></h2>
+
+<img src="/images/crackme/image7.png" alt="v8 xmmword" />
+
+<p>
+<code>v8</code> loads its value from <code>xmmword_140002320</code>, which contains:
+</p>
+
+<pre><code>6F6C6C654821646C726F57202Ch</code></pre>
+
+<img src="/images/crackme/image8.png" alt="xmmword memory view" />
+
+<p>
+This value is only 13 bytes long. Since <code>__m128i</code> is 16 bytes, the remaining 3 bytes are padded with zeros:
+</p>
+
+<pre><code>6F6C6C654821646C726F57202C000000h</code></pre>
+
+<hr />
+
+<h2>Splitting the 128-bit Value</h2>
+
+<p>
+The <code>m128i_i64</code> field splits the 128-bit value into two 64-bit integers:
+</p>
+
+<img src="/images/crackme/image9.png" alt="m128i_i64 usage" />
+<img src="/images/crackme/image10.png" alt="First 64-bit chunk" />
+<img src="/images/crackme/image11.png" alt="Second 64-bit chunk" />
+
+<hr />
+
+<h2>Username Dependency</h2>
+
+<p>
+The <code>Buffer</code> variable stores the username. The program checks the ASCII value of the first character:
+</p>
+
+<ul>
+  <li>If ASCII is even → use <code>v8[0]</code></li>
+  <li>If ASCII is odd → use <code>v8[1]</code></li>
+</ul>
+
+<img src="/images/crackme/image9.png" alt="Buffer[0] modulo logic" />
+
+<p>Example:</p>
+
+<ul>
+  <li><code>7 % 2 = 1</code> → odd → <code>v8[1]</code></li>
+</ul>
+
+<img src="/images/crackme/image12.png" alt="Visual explanation" />
+
+<hr />
+
+<h2>Final Constraint – Modulo 64</h2>
+
+<p>
+The remaining operation is <code>% 64</code>, which extracts the least significant 6 bits.
+</p>
+
+<p>
+Assume the username starts with <strong>B</strong>:
+</p>
+
+<ul>
+  <li><code>'B'</code> ASCII = 66 (even)</li>
+  <li>Even → select <code>v8[0]</code></li>
+</ul>
+
+<img src="/images/crackme/image13.png" alt="Least significant bits" />
+
+<p>
+Extracting the lowest 6 bits gives:
+</p>
+
+<pre><code>101100 (binary) = 44 (decimal)</code></pre>
+
+<hr />
+
+<h2>Solution</h2>
+
+<p>
+Enter any username starting with an even ASCII character (e.g. <strong>B</strong>) and use <strong>44</strong> as the password:
+</p>
+
+<img src="/images/crackme/image14.png" alt="Successful login" />
+
+<p>✅ And success!</p>
+
+<hr />
+
+<h2>Conclusion</h2>
+
+<p>
+Thanks for following this writeup. Clean logic, simple math, and a nice beginner-friendly crackme with array and SIMD concepts.
+</p>
+
+</body>
+</html>
