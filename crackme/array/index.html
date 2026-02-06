@@ -1,70 +1,128 @@
 <!doctype html>
 <html lang="en" class="no-js">
-<head>
-  <meta charset="utf-8">
-  <title>Writeup Overview – Array Target - Ali Al Balushi’s Blog</title>
-
-  <meta name="description" content="Array crackme by winapiadmin with anti-debugging techniques">
+  <head>
+    <meta charset="utf-8">
+<!-- begin _includes/seo.html --><title>Writeup Overview – Array Target - Ali Al Balushi’s Blog</title>
+<meta name="description" content="Some array crackmes with anti-debugging.">
   <meta name="author" content="Ali Al Balushi">
-
-  <meta property="og:type" content="article">
-  <meta property="og:locale" content="en">
-  <meta property="og:site_name" content="Ali Al Balushi Blog">
-  <meta property="og:title" content="Writeup Overview – Array Target">
-  <meta property="og:url" content="https://alialbalushiii.github.io/crackme/array/">
-  <meta property="og:description" content="Array crackme writeup with reverse engineering walkthrough">
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <script>
-    document.documentElement.className =
-      document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
-  </script>
-
-  <link rel="stylesheet" href="/assets/css/main.css">
-  <link rel="preload"
-        href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"
-        as="style"
-        onload="this.onload=null;this.rel='stylesheet'">
-  <noscript>
-    <link rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
-  </noscript>
-</head>
-
-<body class="layout--single wide">
-
+  <meta property="article:author" content="Ali Al Balushi">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="Ali Al Balushi Blog">
+<meta property="og:title" content="Writeup Overview – Array Target">
+<meta property="og:url" content="https://alialbalushiii.github.io/crackme/array/">
+  <meta property="og:description" content="Some array crackmes with anti-debugging.">
+  <meta property="article:published_time" content="2026-02-5T17:00:00+02:00">
+<link rel="canonical" href="https://alialbalushiii.github.io/crackme/array/">
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "alialbalushiii",
+      "url": "https://alialbalushiii.github.io/"
+    
+  }
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+  </head>
+  <body class="layout--single wide">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
 <div class="masthead">
   <div class="masthead__inner-wrap">
-    <nav class="greedy-nav">
-      <a class="site-title" href="/">Ali Al Balushi's Blog</a>
-      <ul class="visible-links">
-        <li class="masthead__menu-item"><a href="/about">About</a></li>
-      </ul>
-    </nav>
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Ali Al Balushi's Blog
+          
+        </a>
+        <ul class="visible-links">
+<li class="masthead__menu-item">
+              <a href="/about">About</a>
+            </li>
+</ul>  
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
   </div>
 </div>
-
-<div class="initial-content">
+    <div class="initial-content">
 <div id="main" role="main">
-
-<article class="page h-entry">
-<div class="page__inner-wrap">
-
-<header>
-  <h1 class="page__title">Writeup Overview – Array Target</h1>
-  <p class="page__meta">
-    <span><i class="far fa-calendar-alt"></i> Nov 13, 2023</span>
+  <div class="sidebar sticky">
+<div itemscope itemtype="https://schema.org/Person">
+    <div class="author__avatar">
+        <img src="/images/avatar.jpg" alt="Ali Al Balushi" itemprop="image">   
+    </div>
+  <div class="author__content">   
+      <h3 class="author__name" itemprop="name">Ali Al Balushi</h3>  
+      <div class="author__bio" itemprop="description">      
+      </div>    
+  </div>
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">  
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Newcastle</span>
+        </li>
+            <li><a href="/" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-home" aria-hidden="true"></i><span class="label">Home Page</span></a></li>
+            <li><a href="https://github.com/alialbalushiii" rel="noopener noreferrer" target="_blank"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">Github</span></a></li>
+            <li><a href="https://www.linkedin.com/in/ali-al-balushi-125ab3333/" rel="noopener noreferrer" target="_blank"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Linkedin</span></a></li>
+            <li class="author__badge">
+  <a href="https://tryhackme.com/p/oma" target="_blank" rel="noopener noreferrer">
+    <img 
+      src="https://tryhackme-badges.s3.amazonaws.com/oma.png"
+      alt="TryHackMe Badge"
+      style="max-width:180px; height:auto;"
+    />
+  </a>
+</li>
+    </ul>
+  </div>
+</div>
+  </div>
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Writeup Overview – ZEXOR v0.1 Target">
+    <meta itemprop="description" content="ZEXOR v0.1 is a basic license checker designed for beginners. We are going to reverse engineer the target to get the licence. ">
+    <meta itemprop="datePublished" content="2026-2-5T17:00:00+02:00">
+    <div class="page__inner-wrap"> 
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="https://alialbalushiii.github.io/crackme/array/" class="u-url" itemprop="url">Writeup Overview – Array Target
+</a>
+          </h1>
+  <p class="page__meta"> 
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        <time datetime="2021-10-28T17:00:00+02:00">Feb 5, 2026</time>
+      </span>
     <span class="page__meta-sep"></span>
-    <span><i class="far fa-clock"></i> 4 minute read</span>
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          10 minute read
+      </span>
   </p>
-</header>
-
-<!-- ================= CONTENT START ================= -->
-
-<section class="page__content e-content">
-
-<h2>winapiadmin (Array) – Target</h2>
+        </header>
+      
+      <section class="page__content e-content" itemprop="text">
+        <h2 id="winapiadmin-array-target">winapiadmin (Array) – Target</h2>
 
 <ul>
   <li><strong>Name:</strong> Array</li>
@@ -81,68 +139,73 @@
 <hr>
 
 <p><strong>First, I start by running the target:</strong></p>
-<img src="/images/crackme/array/1.png" alt="Run target">
+<p><img src="/images/crackme/array/1.png" alt="Run target"></p>
 
-<p>It asks for a username and password.</p>
+<p>It asks for a username and a password.</p>
 
 <hr>
 
 <p>
-Next, I load the binary into <strong>IDA Pro</strong> and decompile
-the <code>main()</code> function:
+Next, I load the binary into <strong>IDA Pro</strong> and decompile the
+<code>main()</code> function:
 </p>
-<img src="/images/crackme/array/2.png" alt="main function">
+<p><img src="/images/crackme/array/2.png" alt="main function"></p>
 
 <ul>
   <li>
-    <strong>Username buffer:</strong>
-    <img src="/images/crackme/array/3.png">
+    The <code>Buffer</code> variable stores the username:
+    <p><img src="/images/crackme/array/3.png" alt="Username buffer"></p>
   </li>
   <li>
-    <strong>Password string:</strong>
-    <img src="/images/crackme/array/4.png">
+    The <code>String</code> variable holds the password:
+    <p><img src="/images/crackme/array/4.png" alt="Password string"></p>
   </li>
 </ul>
 
 <hr>
 
 <p>
-The password is interpreted as a 64-bit integer:
+We observe that <code>v5</code> holds the user-entered password, interpreted
+as a 64-bit integer:
 </p>
-<img src="/images/crackme/array/5.png">
+<p><img src="/images/crackme/array/5.png" alt="atoi64 usage"></p>
 
 <hr>
 
 <p>
-<strong>This conditional block decides validation:</strong>
+<strong>This conditional block determines password validity:</strong>
 </p>
-<img src="/images/crackme/array/6.png">
+<p><img src="/images/crackme/array/6.png" alt="if condition"></p>
 
+<p>
+The password must satisfy:
+</p>
 <pre><code>v8.m128i_i64[Buffer[0] % 2] % 64</code></pre>
 
 <hr>
 
 <h3>Understanding <code>v8</code></h3>
 
-<img src="/images/crackme/array/7.png">
+<p><img src="/images/crackme/array/7.png" alt="v8 xmmword"></p>
 
-<p>
-The 128-bit value is:
-</p>
+<ul>
+  <li>
+    <code>v8</code> loads a 128-bit value:
+    <code>6F6C6C654821646C726F57202C000000h</code>
+  </li>
+  <li>
+    The value is split into two 64-bit integers using
+    <code>m128i_i64</code>:
+  </li>
+</ul>
 
-<pre><code>6F6C6C654821646C726F57202C000000h</code></pre>
-
-<p>
-Split into two 64-bit values:
-</p>
-
-<img src="/images/crackme/array/8.png">
-<img src="/images/crackme/array/9.png">
+<p><img src="/images/crackme/array/8.png" alt="split 128 bit"></p>
+<p><img src="/images/crackme/array/9.png" alt="split result"></p>
 
 <hr>
 
 <p>
-Username first character decides the index:
+The first character of the username decides which 64-bit value is used:
 </p>
 
 <ul>
@@ -150,18 +213,23 @@ Username first character decides the index:
   <li>Odd ASCII → <code>v8[1]</code></li>
 </ul>
 
-<img src="/images/crackme/array/10.png">
+<p><img src="/images/crackme/array/10.png" alt="mod logic"></p>
 
 <hr>
 
 <p>
-Final step applies <code>% 64</code> (lowest 6 bits).
+The final operation applies <code>% 64</code>, keeping only the lowest
+6 bits.
 </p>
 
-<img src="/images/crackme/array/11.png">
+<p>
+Example: username starts with <strong>B</strong> (ASCII 66 → even):
+</p>
+
+<p><img src="/images/crackme/array/11.png" alt="binary mod"></p>
 
 <p>
-Binary <code>101100</code> → Decimal <strong>44</strong>
+Binary <code>101100</code> → decimal <strong>44</strong>
 </p>
 
 <hr>
@@ -170,24 +238,40 @@ Binary <code>101100</code> → Decimal <strong>44</strong>
 Using username <strong>B</strong> and password <strong>44</strong>:
 </p>
 
-<img src="/images/crackme/array/12.png">
+<p><img src="/images/crackme/array/12.png" alt="success"></p>
 
-<p><strong>✔ Success – License Accepted</strong></p>
+<p><strong>✔ Access Granted</strong></p>
 
 <hr>
 
-<p>🚀 Thanks for following the writeup.</p>
+<p>
+🚀 <strong>Thanks for following the writeup!</strong>
+</p>
 
-</section>
+      </section>
 
-<!-- ================= CONTENT END ================= -->
-
+      <footer class="page__meta">
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2021-10-28T17:00:00+02:00">Feb 4, 2026</time></p>
+      </footer>
+    </div>    
+  </article>
 </div>
-</article>
-</div>
-</div>
-
-<script src="/assets/js/main.min.js"></script>
-
-</body>
+    </div>
+    <div id="footer" class="page__footer">
+      <footer>
+        <div class="page__footer-follow">
+    <ul class="social-icons">
+    </ul>
+  </div>
+      </footer>
+    </div>
+  <script src="/assets/js/main.min.js"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-97164925-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-97164925-2', { 'anonymize_ip': false});
+</script>
+  </body>
 </html>
