@@ -122,131 +122,116 @@
         </header>
       
       <section class="page__content e-content" itemprop="text">
-        <h2 id="winapiadmin-array-target">winapiadmin (Array) – Target</h2>
+        <h1 id="winapiadmin-array-target"># winapiadmin (Array) - Target:</h1>
 
 <ul>
-  <li><strong>Name:</strong> Array</li>
-  <li><strong>Author:</strong> winapiadmin</li>
-  <li><strong>Platform:</strong> Windows</li>
-  <li><strong>Architecture:</strong> x86-64</li>
-  <li><strong>Language:</strong> C / C++</li>
-  <li><strong>Difficulty:</strong> 2.0 (Beginner) 🟡</li>
-  <li><strong>Quality:</strong> 4.0 ⭐</li>
-  <li><strong>Upload Date:</strong> 2023-11-13</li>
-  <li><strong>Description:</strong> Some array crackmes with anti-debugging.</li>
+  <li>Name: Array</li>
+  <li>Author: winapiadmin</li>
+  <li>Platform: Windows</li>
+  <li>Architecture: x86-64</li>
+  <li>Language: C / C++</li>
+  <li>Difficulty: 2.0 (Beginner) 🟡</li>
+</ul>
+
+<p>Quality: 4.0 ⭐<br>
+Upload Date: 2023-11-13</p>
+
+<ul>
+  <li>Description: Some array crackmes with anti-debugging.</li>
 </ul>
 
 <hr>
 
-<p><strong>First, I start by running the target:</strong></p>
-<p><img src="/images/crackme/array/1.png" alt="Run target"></p>
+<p>First, I start by running the target</p>
 
-<p>It asks for a username and a password.</p>
+<p><img src="/images/crackme/array/1.png" alt=""></p>
+
+<p> It asks for username and password!</p>
 
 <hr>
 
-<p>
-Next, I load the binary into <strong>IDA Pro</strong> and decompile the
-<code>main()</code> function:
-</p>
-<p><img src="/images/crackme/array/2.png" alt="main function"></p>
+<p>Now let's move to the IDA Pro and decompile the <code>main()</code> function as shown below:</p>
+
+<p><img src="/images/crackme/array/2.png" alt=""></p>
 
 <ul>
-  <li>
-    The <code>Buffer</code> variable stores the username:
-    <p><img src="/images/crackme/array/3.png" alt="Username buffer"></p>
+  <li>we can notice that the <code>Buffer</code> holds the username :
+    <p><img src="/images/crackme/array/3.png" alt=""></p>
   </li>
-  <li>
-    The <code>String</code> variable holds the password:
-    <p><img src="/images/crackme/array/4.png" alt="Password string"></p>
+  <li>And the <code>String</code> variable hold the password that the user entered:
+    <p><img src="/images/crackme/array/4.png" alt=""></p>
   </li>
 </ul>
 
 <hr>
 
-<p>
-We observe that <code>v5</code> holds the user-entered password, interpreted
-as a 64-bit integer:
-</p>
-<p><img src="/images/crackme/array/5.png" alt="atoi64 usage"></p>
+<p>We can see that v5 holds the user-entered password, but it converts the string to a 64-bit integer (to be more accurate, it is not converted, it reads the 64-bit as an integer).</p>
+
+<p><img src="/images/crackme/array/5.png" alt=""></p>
 
 <hr>
 
-<p>
-<strong>This conditional block determines password validity:</strong>
-</p>
-<p><img src="/images/crackme/array/6.png" alt="if condition"></p>
+<p>This is the most important lines of code in this target. This if block determines if the password is valid or not, so we need to reverse-engineer the condition.</p>
 
-<p>
-The password must satisfy:
-</p>
-<pre><code>v8.m128i_i64[Buffer[0] % 2] % 64</code></pre>
+<p><img src="/images/crackme/array/6.png" alt=""></p>
 
 <hr>
 
-<h3>Understanding <code>v8</code></h3>
+<p> So we know that the password when presented as a 64-bit integer should be equal to this<br>
+<code>v8.m128i_i64[Buffer[0] % 2] % 64</code> to be a valid password.</p>
 
-<p><img src="/images/crackme/array/7.png" alt="v8 xmmword"></p>
+<hr>
+
+<h1 id="what-is-v8"># what is <code>v8</code>:</h1>
+
+<p><img src="/images/crackme/array/7.png" alt=""></p>
 
 <ul>
-  <li>
-    <code>v8</code> loads a 128-bit value:
-    <code>6F6C6C654821646C726F57202C000000h</code>
-  </li>
-  <li>
-    The value is split into two 64-bit integers using
-    <code>m128i_i64</code>:
-  </li>
+  <li><code>v8</code> hold a value located at <code>xmmword_140002320</code> and that value is <code>6F6C6C654821646C726F57202Ch</code> which is 128-bit (16-Byte).</li>
 </ul>
 
-<p><img src="/images/crackme/array/8.png" alt="split 128 bit"></p>
-<p><img src="/images/crackme/array/9.png" alt="split result"></p>
+<p><img src="/images/crackme/array/8.png" alt=""></p>
+
+<p>We can see the value length is just 13 Bytes, which means another 3 Bytes are missed, we are going to cast the missing bytes with zero, so it will be <code>6F6C6C654821646C726F57202C000000h</code></p>
 
 <hr>
-
-<p>
-The first character of the username decides which 64-bit value is used:
-</p>
 
 <ul>
-  <li>Even ASCII → <code>v8[0]</code></li>
-  <li>Odd ASCII → <code>v8[1]</code></li>
+  <li>let's look again into the <code>v8</code> in if block:</li>
 </ul>
 
-<p><img src="/images/crackme/array/10.png" alt="mod logic"></p>
+<p><img src="/images/crackme/array/9.png" alt=""></p>
+
+<p>The <code>m128i_i64</code> will seprate the 128-bit into 2 * 64-bit. so we got this:</p>
+
+<p><img src="/images/crackme/array/10.png" alt=""></p>
+<p><img src="/images/crackme/array/11.png" alt=""></p>
 
 <hr>
 
-<p>
-The final operation applies <code>% 64</code>, keeping only the lowest
-6 bits.
-</p>
+<p>As we know that <code>Buffer</code> variable hold the username of user, so it will take the first index of the username (the first letter represented in ascii) and checks if the ascii value odd or even, so if the value odd then it will be <code>v8[1]</code> because as you know that for example<code>7 % 2 = 1</code>, and if the ascii number is even, it will be <code>v8[0]</code>.</p>
 
-<p>
-Example: username starts with <strong>B</strong> (ASCII 66 → even):
-</p>
+<p><img src="/images/crackme/array/12.png" alt=""></p>
 
-<p><img src="/images/crackme/array/11.png" alt="binary mod"></p>
+<p>more visual explaining:</p>
 
-<p>
-Binary <code>101100</code> → decimal <strong>44</strong>
-</p>
+<p><img src="/images/crackme/array/13.png" alt=""></p>
 
 <hr>
 
-<p>
-Using username <strong>B</strong> and password <strong>44</strong>:
-</p>
+<p>Going back to the <code>if block</code>, only the <code>% 64</code> left for us to analyze. The <code>% 64</code> means take only the last <code>6 bits</code> from the least significant bit. Let's do that, and suppose the user input starts with letter <code>B</code>, which is represented by the number 66, which is even, and even means <code>8[0]</code>, so for now, let's extract the least significant 6 bits:</p>
 
-<p><img src="/images/crackme/array/12.png" alt="success"></p>
+<p><img src="/images/crackme/array/14.png" alt=""></p>
 
-<p><strong>✔ Access Granted</strong></p>
+<p>So we got <code>101100</code>, which in decimal can be presented as 44, so now let's enter any username, his first letter corresponds to ascii letter that is even (for example "B"):</p>
+
+<p><img src="/images/crackme/array/15.png" alt=""></p>
+
+<p>And yeah we did it!</p>
 
 <hr>
 
-<p>
-🚀 <strong>Thanks for following the writeup!</strong>
-</p>
+<p>Thanks for following the writeup.</p>
 
       </section>
 
